@@ -1,25 +1,18 @@
-package diy.com.springboot3security.config.exp2JDBCUserDetailsManagerWithH2;
+package diy.com.springboot3security.config.exp4MultiSecurityFilterSetting;
 
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 import javax.sql.DataSource;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.core.annotation.Order;
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -29,18 +22,51 @@ public class SecurityConfiguration {
 
 
     @Bean
+    @Order(100)
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .securityMatcher("/user")
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers(HttpMethod.GET, "/").permitAll();
-                    authConfig.requestMatchers(HttpMethod.GET, "/user").hasRole("USER");
-                    authConfig.requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN");
+                    authConfig.requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
                     authConfig.anyRequest().authenticated();
                 })
-                .csrf(AbstractHttpConfigurer::disable)
-                .headers(hd->hd.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))// disable the iframe attack protection, to allow iframe
-                .formLogin(withDefaults()) // Login with browser and Build in Form
-                .httpBasic(withDefaults()); // Login with Insomnia or Postman and Basic Auth
+                .formLogin(withDefaults());
+        return http.build();
+    }
+
+    @Bean
+    @Order(101)
+    SecurityFilterChain securityFilterChain1(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher("/admin")
+                .authorizeHttpRequests(authConfig -> {
+                    authConfig.requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN");
+                    authConfig.anyRequest().authenticated();
+                })
+                .formLogin(withDefaults());
+        return http.build();
+    }
+
+    @Bean
+    @Order(102)
+    SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher("/")
+                .authorizeHttpRequests(authConfig -> {
+                    authConfig.anyRequest().permitAll();
+                })
+                .formLogin(withDefaults());
+        return http.build();
+    }
+
+    @Bean
+    @Order(103)
+    SecurityFilterChain securityFilterChain3(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authConfig -> {
+                    authConfig.anyRequest().denyAll();
+                })
+                .formLogin(withDefaults());
         return http.build();
     }
 
@@ -49,7 +75,6 @@ public class SecurityConfiguration {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
         return jdbcUserDetailsManager;
     }
-
 
     @Bean
     DataSource getDataSource() {

@@ -1,0 +1,27 @@
+
+
+
+version: "3"
+
+services:
+
+  mariadb:
+    image: "mariadb:latest"
+    container_name: MyMariaDB
+    restart: 'always'
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    volumes:
+      - "/var/lib/mysql/data:/Users/m245951/Documents/MayoProjects/MySpringSecurityStuff/1database/docker/MariaDBMappingDir/data"
+      - "/var/lib/mysql/logs:/Users/m245951/Documents/MayoProjects/MySpringSecurityStuff/1database/docker/MariaDBMappingDir/log"
+      - /var/docker/mariadb/conf:/etc/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "111111"
+      MYSQL_DATABASE: "springSecurity"
+      MYSQL_USER: "rootUser"
+      MYSQL_PASSWORD: "111111"
+
+
+
