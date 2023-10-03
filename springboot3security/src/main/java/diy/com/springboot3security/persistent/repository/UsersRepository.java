@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Integer> {
 
+    //the EntityGraph is sayings that when Users are fetched, the associated Authorities will be fetched as well
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH,
             attributePaths = {"authorities"})
     Optional<Users> findByUsername(String username);
