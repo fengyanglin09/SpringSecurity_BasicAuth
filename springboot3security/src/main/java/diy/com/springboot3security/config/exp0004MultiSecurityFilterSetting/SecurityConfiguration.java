@@ -1,4 +1,4 @@
-package diy.com.springboot3security.config.exp4MultiSecurityFilterSetting;
+package diy.com.springboot3security.config.exp0004MultiSecurityFilterSetting;
 
 
 import javax.sql.DataSource;
@@ -6,11 +6,9 @@ import javax.sql.DataSource;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;

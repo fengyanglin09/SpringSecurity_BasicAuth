@@ -1,4 +1,4 @@
-package diy.com.springboot3security.config.exp5CreateMyUserDetailServiceNoDatabase;
+package diy.com.springboot3security.config.exp0005CreateMyUserDetailServiceNoDatabase;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

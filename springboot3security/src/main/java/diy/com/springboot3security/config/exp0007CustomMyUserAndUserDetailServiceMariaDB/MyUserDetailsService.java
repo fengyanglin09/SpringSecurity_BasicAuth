@@ -1,4 +1,4 @@
-package diy.com.springboot3security.config.exp7CustomMyUserAndUserDetailServiceMariaDB;
+package diy.com.springboot3security.config.exp0007CustomMyUserAndUserDetailServiceMariaDB;
 
 
 import diy.com.springboot3security.persistent.entity.Users;

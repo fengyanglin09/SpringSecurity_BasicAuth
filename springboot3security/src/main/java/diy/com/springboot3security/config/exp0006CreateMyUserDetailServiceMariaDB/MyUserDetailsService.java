@@ -1,4 +1,4 @@
-package diy.com.springboot3security.config.exp6CreateMyUserDetailServiceMariaDB;
+package diy.com.springboot3security.config.exp0006CreateMyUserDetailServiceMariaDB;
 
 
 import java.util.HashSet;
@@ -9,7 +9,6 @@ import java.util.Set;
 import diy.com.springboot3security.persistent.entity.Users;
 import diy.com.springboot3security.persistent.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

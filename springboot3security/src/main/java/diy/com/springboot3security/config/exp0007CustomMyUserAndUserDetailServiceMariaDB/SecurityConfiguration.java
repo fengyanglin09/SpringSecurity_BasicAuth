@@ -1,8 +1,10 @@
-package diy.com.springboot3security.config.exp5CreateMyUserDetailServiceNoDatabase;
+package diy.com.springboot3security.config.exp0007CustomMyUserAndUserDetailServiceMariaDB;
 
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import diy.com.springboot3security.persistent.repository.UsersRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -10,15 +12,15 @@ import org.springframework.security.authentication.event.AuthenticationFailureBa
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-//@SuppressWarnings("deprecation")
 //@Configuration
 //@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
+    final private UsersRepository usersRepository;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,12 +40,12 @@ public class SecurityConfiguration {
 
     @Bean
     UserDetailsService myUserDetailsService() {
-        return new MyUserDetailsService();
+        return new MyUserDetailsService(this.usersRepository);
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

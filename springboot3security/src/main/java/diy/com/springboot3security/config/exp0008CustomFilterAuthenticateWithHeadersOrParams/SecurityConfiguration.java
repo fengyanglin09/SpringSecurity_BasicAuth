@@ -1,6 +1,5 @@
-package diy.com.springboot3security.config.exp6CreateMyUserDetailServiceMariaDB;
+package diy.com.springboot3security.config.exp0008CustomFilterAuthenticateWithHeadersOrParams;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 import diy.com.springboot3security.persistent.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//@Configuration
-//@EnableWebSecurity
+import static org.springframework.security.config.Customizer.withDefaults;
+
+@Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
@@ -33,7 +35,8 @@ public class SecurityConfiguration {
                     authConfig.anyRequest().authenticated();
                 })
                 .csrf(csrf -> csrf.disable())
-                //.userDetailsService(new MyUserDetailsService())
+                .addFilterBefore(new MySecurityHeaderFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new MySecurityParamFilter(), MySecurityHeaderFilter.class)
                 .formLogin(withDefaults()) // Login with browser and Build in Form
                 .httpBasic(withDefaults()); // Login with Insomnia or Postman and Basic Auth
         return http.build();

@@ -1,4 +1,4 @@
-package diy.com.springboot3security.config.exp7CustomMyUserAndUserDetailServiceMariaDB;
+package diy.com.springboot3security.config.exp0007CustomMyUserAndUserDetailServiceMariaDB;
 
 
 import java.time.LocalDateTime;

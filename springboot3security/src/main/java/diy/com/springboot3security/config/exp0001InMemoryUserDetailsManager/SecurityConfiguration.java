@@ -1,12 +1,10 @@
-package diy.com.springboot3security.config.exp1InMemoryUserDetailsManager;
+package diy.com.springboot3security.config.exp0001InMemoryUserDetailsManager;
 
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
