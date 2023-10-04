@@ -44,7 +44,8 @@ public class MySecurityHeaderFilter extends OncePerRequestFilter {
 
 
         /**
-         * a request is considered authenticated if SecurityContext has the authenticationToken with <em>authorities<em/>!!
+         * 1. set authentication to authenticate a request
+         * 2. a request is considered authenticated if SecurityContext has the authenticationToken with <em>authorities<em/>!!
          * */
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(login, null, AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN", "ROLE_DEVELOPER")) );
 
