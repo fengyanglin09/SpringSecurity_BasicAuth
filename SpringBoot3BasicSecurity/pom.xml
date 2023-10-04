@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>diy.com</groupId>
-    <artifactId>springboot3security</artifactId>
+    <artifactId>SpringBoot3BasicSecurity</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>springboot3security</name>
